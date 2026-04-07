@@ -180,9 +180,9 @@
                         <span class="material-icons arrow-icon">chevron_left</span>
                     </div>
                     <div class="nav-treeview">
-                        <a href="https://dapo.kemendikdasmen.go.id/progres-paud/3/180214?view=tk" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik TK</a>
-                        <a href="https://dapo.kemendikdasmen.go.id/progres-sd/3/180214" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik SD</a>
-                        <a href="https://dapo.kemendikdasmen.go.id/progres-smp/3/180214" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik SMP</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/progres-paud/3/180224?view=tk" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik TK</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/progres-sd/3/180224" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik SD</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/progres-smp/3/180224" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Progres Dapodik SMP</a>
                         <a href="https://dapo.kemendikdasmen.go.id/unduhan" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> Unduh Aplikasi DAPODIK</a>
                         <a href="https://ptk.datadik.kemendikdasmen.go.id/" target="_blank" class="nav-link text-[11px] opacity-80"><span class="material-icons text-[12px]">circle</span> PTK Datadik</a>
                     </div>
@@ -321,23 +321,26 @@
                 const jmlSiswa = (parseInt(cols[9]) || 0) + (parseInt(cols[10]) || 0);
 
                 schoolData.push({
-                    id: i, 
-                    nama: cols[0], 
-                    lat: parseFloat(cols[1]), 
-                    long: parseFloat(cols[2]),
-                    jenjang: jnj, 
-                    fotoDrive: cols[4], 
-                    npsn: cols[5], 
-                    alamat: cols[6],
-                    kecamatan: kec, 
-                    kepsek: cols[8], 
-                    status: (cols[14] || "SWASTA").toUpperCase(),
-                    akreditasi: cols[13] || "-",
-                    jmlGuru: cols[11] || "0",
-                    jmlSiswa: jmlSiswa,
-                    linkKemdikbud: cols[21] || "#",
-                    linkWeb: cols[22] || "#"
-                });
+    id: i, 
+    nama: cols[0], 
+    lat: parseFloat(cols[1]), 
+    long: parseFloat(cols[2]),
+    jenjang: jnj, 
+    fotoDrive: cols[4], 
+    npsn: cols[5], 
+    alamat: cols[6],
+    kecamatan: kec, 
+    kepsek: cols[8], 
+    operator: cols[15], // Menambahkan kolom Operator (Indeks 12)
+    Rombel: cols[12], // Menambahkan kolom Operator (Indeks 13)
+    Kurikulum: cols[16], // Menambahkan kolom Operator (Indeks 14)
+    status: (cols[14] || "SWASTA").toUpperCase(),
+    akreditasi: cols[13] || "-",
+    jmlGuru: cols[11] || "0",
+    jmlSiswa: jmlSiswa,
+    linkKemdikbud: cols[21] || "#",
+    linkWeb: cols[22] || "#"
+});
             }
         });
 
@@ -393,38 +396,40 @@ let slidesHtml = photoLinks.map(link => {
                 if (!slidesHtml) slidesHtml = `<li class="splide__slide"><img src="https://via.placeholder.com/280x160?text=Tidak+Ada+Foto"></li>`;
 
                 const popupContent = `
-                <div>
-                    <div style="background:#343a40; color:white; padding:12px; border-bottom: 3px solid #007bff">
-                        <b style="font-size:12px; display:block; text-transform:uppercase">${d.nama} 
-                            <span class="badge-status ${d.status==='NEGERI'?'bg-negeri':'bg-swasta'}">${d.status}</span>
-                        </b>
-                        <div style="font-size:9px; margin-top:2px; opacity:0.8">KEC. ${d.kecamatan} | NPSN: ${d.npsn}</div>
-                    </div>
-                    <section id="slider-${d.id}" class="splide">
-                        <div class="splide__track"><ul class="splide__list">${slidesHtml}</ul></div>
-                    </section>
-                    <div style="padding:12px; font-size:11px;">
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:10px;">
-                            <div style="background:#f1f3f5; padding:6px; border-radius:4px; text-align:center; border:1px solid #dee2e6">
-                                <p style="font-size:8px; color:#6c757d; margin:0; font-weight:700">AKREDITASI</p>
-                                <b style="font-size:13px; color:#212529">${d.akreditasi}</b>
-                            </div>
-                            <div style="background:#f1f3f5; padding:6px; border-radius:4px; text-align:center; border:1px solid #dee2e6">
-                                <p style="font-size:8px; color:#6c757d; margin:0; font-weight:700">GURU / SISWA</p>
-                                <b style="font-size:13px; color:#212529">${d.jmlGuru} / ${d.jmlSiswa}</b>
-                            </div>
-                        </div>
-                        <p><strong>Kepsek:</strong> ${d.kepsek || '-'}</p>
-                        <p style="color:#666; margin-top:4px; line-height:1.2;">
-                            <span class="material-icons" style="font-size:11px; vertical-align:middle">place</span> ${d.alamat}
-                        </p>
-                        <div style="display:flex; gap:4px; margin-top:12px;">
-                            <a href="${d.linkKemdikbud}" target="_blank" class="btn-lte">DATA REFERENSI</a>
-                            <a href="https://guru.kemendikdasmen.go.id/" target="_blank" class="btn-lte">RUANG GURU</a> 
-                            <a href="${d.linkWeb}" target="_blank" class="btn-lte">WEB</a> 
-                        </div>
-                    </div>
-                </div>`;
+<div>
+    <div style="background:#343a40; color:white; padding:12px; border-bottom: 3px solid #007bff">
+        <b style="font-size:12px; display:block; text-transform:uppercase">${d.nama} 
+            <span class="badge-status ${d.status==='NEGERI'?'bg-negeri':'bg-swasta'}">${d.status}</span>
+        </b>
+        <div style="font-size:9px; margin-top:2px; opacity:0.8">KEC. ${d.kecamatan} | NPSN: ${d.npsn}</div>
+    </div>
+    <section id="slider-${d.id}" class="splide">
+        <div class="splide__track"><ul class="splide__list">${slidesHtml}</ul></div>
+    </section>
+    <div style="padding:12px; font-size:11px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:10px;">
+            <div style="background:#f1f3f5; padding:6px; border-radius:4px; text-align:center; border:1px solid #dee2e6">
+                <p style="font-size:8px; color:#6c757d; margin:0; font-weight:700">AKREDITASI</p>
+                <b style="font-size:13px; color:#212529">${d.akreditasi}</b>
+            </div>
+            <div style="background:#f1f3f5; padding:6px; border-radius:4px; text-align:center; border:1px solid #dee2e6">
+                <p style="font-size:8px; color:#6c757d; margin:0; font-weight:700">GURU / SISWA</p>
+                <b style="font-size:13px; color:#212529">${d.jmlGuru} / ${d.jmlSiswa}</b>
+            </div>
+        </div>
+        <p><strong>Kepsek:</strong> ${d.kepsek || '-'}</p>
+        <p><strong>Operator:</strong> ${d.operator || '-'}</p> <p style="color:#666; margin-top:4px; line-height:1.2;">
+        <p><strong>Rombel:</strong> ${d.Rombel || '-'}</p> <p style="color:#666; margin-top:4px; line-height:1.2;">
+        <p><strong>Kurikulum:</strong> ${d.Kurikulum || '-'}</p> <p style="color:#666; margin-top:4px; line-height:1.2;">    
+            <span class="material-icons" style="font-size:11px; vertical-align:middle">place</span> ${d.alamat}
+        </p>
+        <div style="display:flex; gap:4px; margin-top:12px;">
+            <a href="${d.linkKemdikbud}" target="_blank" class="btn-lte">DATA REFERENSI</a>
+            <a href="https://guru.kemendikdasmen.go.id/" target="_blank" class="btn-lte">RUANG GURU</a> 
+            <a href="${d.linkWeb}" target="_blank" class="btn-lte">WEB</a> 
+        </div>
+    </div>
+</div>`;
 
                 const marker = L.marker([d.lat, d.long], { icon: icons[d.jenjang] || icons.DEFAULT }).addTo(map);
                 marker.bindPopup(popupContent, { maxWidth: 280, minWidth: 280 });
